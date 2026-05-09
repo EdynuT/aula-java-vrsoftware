@@ -6,7 +6,7 @@ Caso os dados sejam válidos, o programa deve exibir uma mensagem de sucesso.
 
 import java.util.Scanner;
 
-public class Task2{
+public class Exercicio{
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
 
