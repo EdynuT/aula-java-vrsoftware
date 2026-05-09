@@ -2,9 +2,11 @@
 
 public class Techcorp006{
     public static void main(String[] args){
-        for (int departamento = 1; departamento <= 4; departamento++){
+        System.out.println("\nRelatótios Trimestrais");
 
-            System.out.println("================================");
+        for (int departamento = 1; departamento <= 4; departamento++){
+            
+            System.out.println("=====================================");
 
             for (int trimestre = 1; trimestre <= 4; trimestre++){
                 if (departamento == 1){
@@ -23,6 +25,6 @@ public class Techcorp006{
                 System.out.println(" - Trimestre " + trimestre);
             }
         }
-        System.out.println("================================");
+        System.out.println("=====================================\n");
     }
 }
