@@ -7,16 +7,16 @@ public class DesafioFinal{
         Scanner scanner = new Scanner(System.in);
 
         int numSenha = (int) (Math.random() * 100);
-        int tentativa = 0;
+        int tentativa = 1;
 
-        while (tentativa <= 5){
+        do{
             if (tentativa < 6){
                 System.out.print(tentativa + ". ");
                 int chute = scanner.nextInt();
                 tentativa++;
 
                 if (chute == numSenha){
-                    System.out.println("Parabéns! Você acertou em " + (tentativa) + " tentativa(s)!\n");
+                    System.out.println("Parabéns! Você acertou em " + (tentativa - 1) + " tentativa(s)!\n");
                     break;
                 } 
                 else if (chute < numSenha){
@@ -27,8 +27,11 @@ public class DesafioFinal{
                 }
             }
             else {
+                tentativa++;
                 System.out.println("Sistema bloquado!\n");
+                break;
             }
-        }
+
+        } while (tentativa < 7);
     }
 }
