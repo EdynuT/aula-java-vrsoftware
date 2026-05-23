@@ -13,7 +13,7 @@ public class Exercicio3 {
         double media = 0.0;
         for (int i = 0; i < valorDias.length; i++) {
             media += valorDias[i];
-    }
+        }
         media /= valorDias.length;
         System.out.println("Média: " + String.format("%.2f", media));
 

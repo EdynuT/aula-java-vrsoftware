@@ -15,10 +15,12 @@ public class Exercicio2 {
                     System.out.println("Email válido!");
                 else
                     System.out.println("Email inválido!");
-            } else {
+            } 
+            else {
                 System.out.println("Email inválido!");
             }
-        } else {
+        } 
+        else {
             System.out.println("Email inválido!");
         }
         scanner.close();

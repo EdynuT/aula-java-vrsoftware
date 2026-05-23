@@ -26,7 +26,8 @@ public class Exercicio1 {
             String status;
             if (concluidas[i]) {
                 status = " [Concluída]";
-            } else {
+            } 
+            else {
                 status = "";
             }
             System.out.println((i + 1) + ". " + tarefas[i] + status);
@@ -38,7 +39,8 @@ public class Exercicio1 {
         if (numero >= 1 && numero <= tarefas.length) {
             concluidas[numero - 1] = true;
             System.out.println("A tarefa '" + tarefas[numero - 1] + "' foi marcada como concluída!");
-        } else {
+        } 
+        else {
             System.out.println("Número de tarefa inválido.");
         }
 

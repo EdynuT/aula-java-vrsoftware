@@ -62,5 +62,6 @@ public class Exercicio4 {
         }
     }
 }
-// Eu n tenho certeza se eu entendi exatamente as circunstancias dos filtros ou se era para fazer uma unica lista com todos os produtos e as opções de filtro, 
+// Eu n tenho certeza se eu entendi exatamente as circunstancias dos filtros 
+// ou se era para fazer uma unica lista com todos os produtos e as opções de filtro, 
 // Mas aqui está o código para o exercício 4
