@@ -24,37 +24,37 @@ public class Metodos {
         double media = calcularMedia();
         exibirResultado(nome, media);
     }
-        // Leitura
-        private static String lerNome() {
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Digite o nome do aluno: ");
-            return scanner.nextLine();
-        }
-
-        // Calcular
-        private static double calcularMedia() {
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Digite a primeira nota: ");
-            double nota1 = scanner.nextDouble();
-            System.out.print("Digite a segunda nota: ");
-            double nota2 = scanner.nextDouble();
-            System.out.print("Digite a terceira nota: ");
-            double nota3 = scanner.nextDouble();
-            
-            return (nota1 + nota2 + nota3) / 3;
-        }
+    
+    // Leitura
+    private static String lerNome() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Digite o nome do aluno: ");
+        return scanner.nextLine();
+    }
+    // Calcular
+    private static double calcularMedia() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Digite a primeira nota: ");
+        double nota1 = scanner.nextDouble();
+        System.out.print("Digite a segunda nota: ");
+        double nota2 = scanner.nextDouble();
+        System.out.print("Digite a terceira nota: ");
+        double nota3 = scanner.nextDouble();
         
-        // Exibir
-        private static void exibirResultado(String nome, double media) {
-            System.out.print(nome + ": " + media);
-            
-            if (media >= 7) {
-                System.out.println(" Aprovado!");
-            } 
-            else {
-                System.out.println(" Reprovado!");
-            }
+        return (nota1 + nota2 + nota3) / 3;
+    }
+    
+    // Exibir
+    private static void exibirResultado(String nome, double media) {
+        System.out.print(nome + ": " + media);
+        
+        if (media >= 7) {
+            System.out.println(" Aprovado!");
+        } 
+        else {
+            System.out.println(" Reprovado!");
         }
+    }
 
     // Preferi deixar os métodos como private, 
     // ja que n faz sentido chamar esses métodos de fora da classe
