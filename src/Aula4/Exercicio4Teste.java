@@ -13,7 +13,7 @@ Sendo honesto, eu sei explicar uns 60% do codigo, mas o restante eu vou ter que 
 De qualquer forma, se quiser não contar esse exercicio, eu entendo. Vai ficar de material para eu estudar mais tarde.
 */ 
 
-public class Exercicio4 {
+public class Exercicio4Teste {
     public static final Scanner scanner = new Scanner(System.in);
 
     public static String[][] produtos = new String[100][4];
