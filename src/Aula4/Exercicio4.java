@@ -3,10 +3,10 @@ import java.util.Scanner;
 public class Exercicio4 {
     public static final Scanner scanner = new Scanner(System.in);
 
-    public static String[][] produtos = new String[100][4];
+    public static Produto[] produtos = new Produto[10];
     public static int totalProdutos;
 
-    public static String[] categorias = new String[2];
+    public static Categoria[] categorias = new Categoria[5];
     public static int totalCategorias;
 
     public static int ESTOQUE_BAIXO = 5;
@@ -81,39 +81,16 @@ public class Exercicio4 {
         } while (opcao != 0);
     }
 
-    public static void cadastrarProduto() {
-        String nome;
-        String categoria;
-        double preco;
-        int quantidade;
-
-        System.out.print("Nome do produto: ");
-        nome = scanner.nextLine();
-        System.out.print("Preço do produto: ");
-        preco = scanner.nextDouble();
-        System.out.print("Quantidade de produtos: ");
-        quantidade = scanner.nextInt();
-        scanner.nextLine(); // Consumir a quebra de linha pendente
-        System.out.print("Categoria do produto: ");
-        categoria = scanner.nextLine();
-        if (!categoriaExiste(categoria)) {
-            System.out.println("Categoria não existe. Por favor, cadastre a categoria antes de cadastrar o produto.\n");
-            return;
-        }
-
-        produtos[totalProdutos][0] = nome;
-        produtos[totalProdutos][1] = String.valueOf(preco);
-        produtos[totalProdutos][2] = String.valueOf(quantidade);
-        produtos[totalProdutos][3] = String.valueOf(categoria);
-        totalProdutos++;
-        System.out.println("\nProduto cadastrado com sucesso!\n");
-        return;
+    public static void cadastrarProduto(String nome, double preco, int qtd) {
+        Produto produto = new Produto(String nome, double preco, int qtd);
+        System.out.println(produto.nome);
+        
     }
 
     public static void listarProdutos() {
         System.out.println("===== LISTA DE PRODUTOS =====");
         for (int i = 0; i < totalProdutos; i++) {
-            System.out.println((i + 1) + ". " + produtos[i][0] + " | R$" + produtos[i][1] + " | Qtde: " + produtos[i][2] + " | " + produtos[i][3]);
+            System.out.println((i + 1) + ". " + produtos[i] + " | R$" + produtos[i] + " | Qtde: " + produtos[i] + " | " + produtos[i]);
         }
         System.out.println();
     }
