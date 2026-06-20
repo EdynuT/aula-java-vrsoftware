@@ -1,12 +1,11 @@
 package sistema;
 
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Main {
     public static final Scanner scanner = new Scanner(System.in);
 
-    public static Produto[] produtos = new Produto[20];
+    public static ProdutoPerecivel[] produtos = new ProdutoPerecivel[20];
     public static int totalProdutos;
 
     public static Categoria[] categorias = new Categoria[5];
@@ -84,6 +83,7 @@ public class Main {
         } while (opcao != 0);
     }
 
+
     public static void cadastrarProduto() {
         if (totalProdutos >= produtos.length) {
             System.out.println("Limite de produtos atingido.\n");
@@ -100,16 +100,31 @@ public class Main {
         }
         System.out.print("Digite a quantidade do produto: ");
         int quantidadeProduto = scanner.nextInt();
+        System.out.print("O produto é perecível? [s/n]: ");
+        String ehPercerivel = scanner.next();
+        boolean perecivel;
+        String validade;
+        String garantia;
+        if (ehPercerivel == "s" || ehPercerivel == "S") {
+            perecivel = true;
+            System.out.print("Digite o prazo de validade: ");
+            validade = scanner.nextLine();
+        } else {
+            perecivel = false;
+            System.out.print("Digite o prazo de garantia: ");
+            garantia = scanner.nextLine();
+        }
         //System.out.print("Digite a categoria do produto: ");
         //String categoriaProduto = scanner.nextLine();
         scanner.nextLine();
 
-        Produto novoProduto = new Produto(nomeProduto, valorProduto, quantidadeProduto);
+        ProdutoPerecivel novoProduto = new ProdutoPerecivel(nomeProduto, valorProduto, quantidadeProduto, perecivel, validade, garantia);
         produtos[totalProdutos] = novoProduto;
         totalProdutos++;
 
         System.out.println("Produto cadastrado com sucesso.\n");
     }
+
 
     public static void listarProdutos() {
         if (totalProdutos == 0) {
@@ -119,16 +134,17 @@ public class Main {
 
         System.out.println("\n===== Lista de Produtos =====");
         for (int i = 0; i < totalProdutos; i++) {
-            Produto produto = produtos[i];
-            System.out.printf("%d%n. %s%n | R$%.2f%n | Qtde: %d%n | (Categoria)", (i + 1), produto.getNome(), produto.getPreco(), produto.getQuantidade());
+            ProdutoPerecivel produto = produtos[i];
+            System.out.printf((i + 1) + ". %s%n | R$ %.2f%n | Qtde: %d%n | Perceivel: %b%n | (Categoria)\n", produto.getNome(), produto.getPreco(), produto.getQuantidade(), produto.getProdutoPerecivel());
         }
     }
+
 
     public static void alterarProduto() {
         System.out.println("==== Lista de Produtos ====");
         for (int i = 0; i < totalProdutos; i++) {
             Produto produto = produtos[i];
-            System.out.printf("%d%n. %s%n | Preço: R$%.2f%n", (i + 1), produto.getNome(), produto.getPreco());
+            System.out.printf((i + 1) + ". %s%n | Preço: R$ %.2f%n", produto.getNome(), produto.getPreco());
         }
         System.out.print("Numero do produto: ");
         int numeroProduto = scanner.nextInt();
@@ -143,6 +159,7 @@ public class Main {
         System.out.println("Preço do produto atualizado com sucesso.\n");
     }
 
+
     public static void excluirProduto() {
        if (totalProdutos == 0) {
             System.out.println("Nenhum produto cadastrado.\n");
@@ -152,7 +169,7 @@ public class Main {
        System.out.println("==== Lista de Produtos ====");
         for (int i = 0; i < totalProdutos; i++) {
             Produto produto = produtos[i];
-            System.out.printf("%d%n. %s%n", (i + 1), produto.getNome());
+            System.out.printf((i + 1) + ". %s%n", produto.getNome());
         }
         System.out.print("Numero do produto a ser excluído: ");
         int numeroProduto = scanner.nextInt();
@@ -162,15 +179,15 @@ public class Main {
             System.out.println("Número de produto inválido.\n");
             return;
         } else {
-            System.out.print("Comfirmar exclusão (S/N): ");
+            System.out.print("Comfirmar exclusão [s/n]: ");
             String confirmar = scanner.nextLine();
-            if (confirmar == "S") {
+            if (confirmar == "s" || confirmar == "S") {
                 int indiceRemover = numeroProduto - 1;
                 for (int i = indiceRemover; i < totalProdutos - 1; i++) {
                     produtos[i] = produtos[i + 1];
                 }
         
-                produtos[totalProdutos - 1] = null;
+                produtos[numeroProduto - 1] = null;
                 totalProdutos -= 1;
                 System.out.println("Produto excluído com sucesso.\n");
             } else {

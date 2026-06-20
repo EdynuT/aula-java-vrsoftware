@@ -1,9 +1,9 @@
 package sistema;
 
 public class Produto {
-    String nome;
-    double preco;
-    int quantidade;
+    protected String nome;
+    protected double preco;
+    protected int quantidade;
 
     public Produto(String nome, double preco, int qtd) {
         this.nome = nome;
@@ -11,19 +11,19 @@ public class Produto {
         this.quantidade = qtd;
     }
 
-    protected String getNome() {
+    public String getNome() {
         return this.nome;
     }
 
-    protected void setNome(String novoNome) {
+    public void setNome(String novoNome) {
         this.nome = novoNome;
     }
 
-    protected double getPreco() {
+    public double getPreco() {
         return this.preco;
     }
 
-    protected void setPreco(double precoNovo) {
+    public void setPreco(double precoNovo) {
         if (precoNovo > 0) {
             this.preco = precoNovo;
         } else {
@@ -31,15 +31,15 @@ public class Produto {
         }
     }
 
-    protected int getQuantidade() {
+    public int getQuantidade() {
         return this.quantidade;
     }
 
-    protected void setQuantidade(int qtd) {
+    public void setQuantidade(int qtd) {
         this.quantidade -= qtd;
     }
 
-    protected double getValorEmEstoque() {
+    public double getValorEmEstoque() {
         return this.preco * this.quantidade;
     }
 }
