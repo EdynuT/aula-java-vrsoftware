@@ -1,17 +1,19 @@
 package sistema;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
     public static final Scanner scanner = new Scanner(System.in);
 
-    public static ProdutoPerecivel[] produtos = new ProdutoPerecivel[20];
-    public static int totalProdutos;
+    public static List<ProdutoPerecivel> produtos = new ArrayList<>(Arrays.asList());
 
-    public static Categoria[] categorias = new Categoria[5];
-    public static int totalCategorias;
+    public static List<Categoria> categorias = new ArrayList<>(Arrays.asList());
 
-    public static int ESTOQUE_BAIXO = 5;
+    public static int ESTOQUE_BAIXO = 10;
 
     public static void main(String[] args) {
         int opcao;
@@ -85,11 +87,6 @@ public class Main {
 
 
     public static void cadastrarProduto() {
-        if (totalProdutos >= produtos.length) {
-            System.out.println("Limite de produtos atingido.\n");
-            return;
-        }
-
         System.out.print("Digite o nome do produto: ");
         String nomeProduto = scanner.nextLine();
         System.out.print("Digite o valor do produto: ");
@@ -101,11 +98,11 @@ public class Main {
         System.out.print("Digite a quantidade do produto: ");
         int quantidadeProduto = scanner.nextInt();
         System.out.print("O produto é perecível? [s/n]: ");
-        String ehPercerivel = scanner.next();
+        String ehPerecivel = scanner.nextLine();
         boolean perecivel;
         String validade;
         String garantia;
-        if (ehPercerivel == "s" || ehPercerivel == "S") {
+        if (ehPerecivel.toLowerCase().equals("s")) {
             perecivel = true;
             System.out.print("Digite o prazo de validade: ");
             validade = scanner.nextLine();
@@ -119,22 +116,24 @@ public class Main {
         scanner.nextLine();
 
         ProdutoPerecivel novoProduto = new ProdutoPerecivel(nomeProduto, valorProduto, quantidadeProduto, perecivel, validade, garantia);
-        produtos[totalProdutos] = novoProduto;
-        totalProdutos++;
+        produtos.add(novoProduto);
 
         System.out.println("Produto cadastrado com sucesso.\n");
     }
 
 
     public static void listarProdutos() {
-        if (totalProdutos == 0) {
+        if (produtos.isEmpty()) {
             System.out.println("Nenhum produto cadastrado.\n");
             return;
         }
 
         System.out.println("\n===== Lista de Produtos =====");
-        for (int i = 0; i < totalProdutos; i++) {
-            ProdutoPerecivel produto = produtos[i];
+        
+        Collections.sort(produtos);
+
+        for (int i = 0; i < produtos.size(); i++) {
+            ProdutoPerecivel produto = produtos.get(i);
             System.out.printf((i + 1) + ". %s%n | R$ %.2f%n | Qtde: %d%n | Perceivel: %b%n | (Categoria)\n", produto.getNome(), produto.getPreco(), produto.getQuantidade(), produto.getProdutoPerecivel());
         }
     }
@@ -142,8 +141,9 @@ public class Main {
 
     public static void alterarProduto() {
         System.out.println("==== Lista de Produtos ====");
-        for (int i = 0; i < totalProdutos; i++) {
-            Produto produto = produtos[i];
+
+        for (int i = 0; i < produtos.size(); i++) {
+            ProdutoPerecivel produto = produtos.get(i);
             System.out.printf((i + 1) + ". %s%n | Preço: R$ %.2f%n", produto.getNome(), produto.getPreco());
         }
         System.out.print("Numero do produto: ");
@@ -151,47 +151,40 @@ public class Main {
         System.out.print("Novo preço: ");
         double novoPreco = scanner.nextDouble();
 
-        if (numeroProduto < 1 || numeroProduto > totalProdutos) {
+        if (numeroProduto < 1 || numeroProduto > produtos.size()) {
             System.out.println("Número de produto inválido.\n");
             return;
         }
-        produtos[numeroProduto - 1].setPreco(novoPreco);
+        produtos.get(numeroProduto - 1).setPreco(novoPreco);
         System.out.println("Preço do produto atualizado com sucesso.\n");
     }
 
 
     public static void excluirProduto() {
-       if (totalProdutos == 0) {
+       if (produtos.isEmpty()) {
             System.out.println("Nenhum produto cadastrado.\n");
             return;
         }
 
        System.out.println("==== Lista de Produtos ====");
-        for (int i = 0; i < totalProdutos; i++) {
-            Produto produto = produtos[i];
+        for (int i = 0; i < produtos.size(); i++) {
+            ProdutoPerecivel produto = produtos.get(i);
             System.out.printf((i + 1) + ". %s%n", produto.getNome());
         }
         System.out.print("Numero do produto a ser excluído: ");
         int numeroProduto = scanner.nextInt();
-        scanner.nextLine();
 
-        if (numeroProduto < 1 || numeroProduto > totalProdutos) {
+        if (numeroProduto < 1 || numeroProduto > produtos.size()) {
             System.out.println("Número de produto inválido.\n");
-            return;
         } else {
             System.out.print("Comfirmar exclusão [s/n]: ");
             String confirmar = scanner.nextLine();
-            if (confirmar == "s" || confirmar == "S") {
+
+            if (confirmar.toLowerCase().equals("s")) {
                 int indiceRemover = numeroProduto - 1;
-                for (int i = indiceRemover; i < totalProdutos - 1; i++) {
-                    produtos[i] = produtos[i + 1];
-                }
-        
-                produtos[numeroProduto - 1] = null;
-                totalProdutos -= 1;
+                produtos.remove(indiceRemover);
+
                 System.out.println("Produto excluído com sucesso.\n");
-            } else {
-                return;
             }
         }
     }
