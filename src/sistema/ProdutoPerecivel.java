@@ -9,11 +9,12 @@ public class ProdutoPerecivel extends Produto {
         String nome, 
         double preco, 
         int quantidade, 
+        String categoria,
         boolean produtoPerecivel,
         String validade,
         String garantia
     ) {
-        super(nome, preco, quantidade);
+        super(nome, preco, quantidade, categoria);
         this.produtoPerecivel = produtoPerecivel;
         this.validade = validade;
         this.garantia = garantia;

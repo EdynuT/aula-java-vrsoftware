@@ -95,30 +95,44 @@ public class Main {
             System.out.println("O preço do produto deve ser maior do que zero! ");
             return;
         }
+
         System.out.print("Digite a quantidade do produto: ");
         int quantidadeProduto = scanner.nextInt();
         System.out.print("O produto é perecível? [s/n]: ");
         String ehPerecivel = scanner.nextLine();
+
         boolean perecivel;
         String validade;
         String garantia;
+
         if (ehPerecivel.toLowerCase().equals("s")) {
             perecivel = true;
             System.out.print("Digite o prazo de validade: ");
             validade = scanner.nextLine();
+            garantia = "Não há garantia";
         } else {
             perecivel = false;
             System.out.print("Digite o prazo de garantia: ");
             garantia = scanner.nextLine();
+            validade = "Não há validade";
         }
-        //System.out.print("Digite a categoria do produto: ");
-        //String categoriaProduto = scanner.nextLine();
+
+        System.out.print("Digite a categoria do produto: ");
+        String categoriaProduto = scanner.nextLine();
+        if (categorias.contains(categoriaProduto)){
+            ProdutoPerecivel novoProduto = new ProdutoPerecivel(nomeProduto, valorProduto, quantidadeProduto, categoriaProduto, perecivel, validade, garantia);
+            produtos.add(novoProduto);
+            System.out.println("Produto cadastrado com sucesso.\n");
+        } else {
+            System.out.println("Categoria de produto não cadastrada.\n Cadastre essa categoria priimeiro.");
+            System.out.println("Deseja cadastrar a categoria? [s/n]: ");
+            String escolha = scanner.nextLine();
+
+            if (escolha.toLowerCase().equals("s")) {
+                gerenciarCategorias();
+            }
+        }
         scanner.nextLine();
-
-        ProdutoPerecivel novoProduto = new ProdutoPerecivel(nomeProduto, valorProduto, quantidadeProduto, perecivel, validade, garantia);
-        produtos.add(novoProduto);
-
-        System.out.println("Produto cadastrado com sucesso.\n");
     }
 
 
@@ -128,13 +142,11 @@ public class Main {
             return;
         }
 
-        System.out.println("\n===== Lista de Produtos =====");
-        
-        Collections.sort(produtos);
+        System.out.println("\n===== Lista de Produtos =====");        
 
         for (int i = 0; i < produtos.size(); i++) {
             ProdutoPerecivel produto = produtos.get(i);
-            System.out.printf((i + 1) + ". %s%n | R$ %.2f%n | Qtde: %d%n | Perceivel: %b%n | (Categoria)\n", produto.getNome(), produto.getPreco(), produto.getQuantidade(), produto.getProdutoPerecivel());
+            System.out.printf("%d. %s | R$ %.2f | Qtde: %d | Perceivel: %b | %s%n", i + 1, produto.getNome(), produto.getPreco(), produto.getQuantidade(), produto.getProdutoPerecivel(), produto.getCategoria());
         }
     }
 
@@ -181,8 +193,7 @@ public class Main {
             String confirmar = scanner.nextLine();
 
             if (confirmar.toLowerCase().equals("s")) {
-                int indiceRemover = numeroProduto - 1;
-                produtos.remove(indiceRemover);
+                produtos.remove(numeroProduto - 1);
 
                 System.out.println("Produto excluído com sucesso.\n");
             }
@@ -210,21 +221,118 @@ public class Main {
                     System.out.println("Voltando ao menu principal...\n");
                     break;
                 case 1:
-                    //cadastrarCategoria();
+                    cadastrarCategoria();
                     break;
                 case 2:
-                    //listarCategorias();
+                    listarCategorias();
                     break;
                 case 3:
-                    // Chamar método para editar categoria
+                    alterarCategoria();
                     break;
                 case 4:
-                    // Chamar método para excluir categoria
+                    excluirCategoria();
                     break;
                 default:
                     System.out.println("Opção inválida.\n");
             }
         } while (opcao != 0);
+    }
+
+
+    public static void cadastrarCategoria() {
+        System.out.print("Digite o nome da Categoria: ");
+        String nomeCategoria = scanner.nextLine();
+
+        Categoria novaCategoria = new Categoria(nomeCategoria);
+        categorias.add(novaCategoria);
+    }
+
+
+    public static void listarCategorias() {
+        if (categorias.isEmpty()) {
+            System.out.println("Nenhuma categoria cadastrada.\n");
+            return;
+        }
+
+        System.out.println("==== Lista de Categorias ====");
+        for (int i = 0; i < categorias.size(); i++) {
+            Categoria categoria = categorias.get(i);
+
+            int numProdutos = 0;
+            for (ProdutoPerecivel produto : produtos) {
+                if (produto.getCategoria().equalsIgnoreCase(categoria.getNome())) {
+                    numProdutos++;
+                }
+            }
+
+            if (numProdutos == 1) {
+                System.out.printf("%d. %s (%d produto)%n", i + 1, categoria.getNome(), numProdutos);
+            } else {
+                System.out.printf("%d. %s (%d produtos)%n", i + 1, categoria.getNome(), numProdutos);
+            }
+        }
+    }
+
+    
+    public static void alterarCategoria() {
+        if (categorias.isEmpty()) {
+            System.out.println("Nenhuma categoria cadastrada.\n");
+            return;
+        }
+
+        System.out.println("==== Lista de Categorias ====");
+        for (int i = 0; i < categorias.size(); i++) {
+            Categoria categoria = categorias.get(i);
+
+            System.out.printf("%d. %s", i + 1, categoria.getNome());
+        }
+
+        System.out.print("Numero da categoria: ");
+        int escolha = scanner.nextInt();
+
+        if (escolha < 1 || escolha > categorias.size()) {
+            System.out.println("Categoria inexistente");
+            return;
+        }
+
+        System.out.print("Novo nome da categoria: ");
+        String novoNome = scanner.nextLine();
+        categorias.get(escolha - 1).setNome(novoNome);
+        System.out.println("Nome de categoria alterado");
+    }
+
+
+    public static void excluirCategoria() {
+        if (categorias.isEmpty()) {
+            System.out.println("Nenhuma categoria cadastrada.\n");
+            return;
+        }
+
+        int numProdutos = 0;
+
+        System.out.println("==== Lista de Categorias ====");
+        for (int i = 0; i < categorias.size(); i++) {
+            Categoria categoria = categorias.get(i);
+            System.out.printf("%d. %s", i + 1, categoria.getNome());
+        }
+        
+        System.out.print("Numero da categoria: ");
+        int escolha = scanner.nextInt();
+        
+        if (escolha < 1 || escolha > categorias.size()) {
+            System.out.println("Número de categoria inválido");
+            return;
+        } else {
+            System.out.print("Comfirmar exclusão [s/n]: ");
+            String confirmar = scanner.nextLine();
+
+            if (confirmar.toLowerCase().equals("s")) {
+                
+                categorias.remove(escolha - 1);
+
+                System.out.println("Categoria excluída com sucesso");
+            }
+        }
     }
 
 //  ================ Gerenciamento de Relatórios =================
@@ -253,5 +361,10 @@ public class Main {
                     break;
             }
         } while (opcao != 0);
+    }
+
+
+    public static void gerarRelatorioEstoque() {
+
     }
 }

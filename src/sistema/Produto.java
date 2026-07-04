@@ -1,14 +1,16 @@
 package sistema;
 
-public class Produto {
+public abstract class Produto {
     protected String nome;
     protected double preco;
     protected int quantidade;
+    protected String categoria;
 
-    public Produto(String nome, double preco, int qtd) {
+    public Produto(String nome, double preco, int qtd, String categoria) {
         this.nome = nome;
         this.preco = preco;
         this.quantidade = qtd;
+        this.categoria = categoria;
     }
 
     public String getNome() {
@@ -37,6 +39,14 @@ public class Produto {
 
     public void setQuantidade(int qtd) {
         this.quantidade -= qtd;
+    }
+
+    public String getCategoria() {
+        return this.categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public double getValorEmEstoque() {
