@@ -92,17 +92,35 @@ public class Main {
 
     public static void cadastrarProduto() {
         limparConsole();
+        double valorProduto;
+        int quantidadeProduto;
+
         System.out.print("Digite o nome do produto: ");
         String nomeProduto = scanner.nextLine();
-        System.out.print("Digite o valor do produto: ");
-        double valorProduto = scanner.nextDouble();
-        if (valorProduto <= 0) {
-            System.out.println("O preço do produto deve ser maior do que zero! ");
+        try{
+            System.out.print("Digite o valor do produto: ");
+            valorProduto = scanner.nextDouble();
+            if (valorProduto <= 0) {
+                System.out.println("O preço do produto deve ser maior do que zero! ");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("Valor inválido. Digite um número válido para o preço do produto.");
+            scanner.nextLine();
             return;
         }
 
-        System.out.print("Digite a quantidade do produto: ");
-        int quantidadeProduto = scanner.nextInt();
+        try {
+            System.out.print("Digite a quantidade do produto: ");
+            quantidadeProduto = scanner.nextInt();
+            if (quantidadeProduto <= 0) {
+                throw new RuntimeException("A quantidade do produto deve ser maior do que zero! ");
+            }
+        } catch (Exception e) {
+            System.out.println("Valor inválido. Digite um número válido para a quantidade do produto.");
+            scanner.nextLine();
+            return;
+        }
         System.out.print("O produto é perecível? [s/n]: ");
         scanner.nextLine();
         String isPerecivel = scanner.nextLine();
